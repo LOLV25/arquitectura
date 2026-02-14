@@ -1,0 +1,611 @@
+# Estructura del Proyecto y SQL
+
+## Estructura de Carpetas del Backend (Python)
+
+```
+backend/
+│
+├── app/
+│   ├── __init__.py
+│   ├── main.py                          # Punto de entrada FastAPI/Flask
+│   ├── config.py                        # Configuraciones (DB, JWT, etc)
+│   ├── database.py                      # Conexión SQLAlchemy
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── dependencies.py              # Dependencias comunes
+│   │   └── routes/
+│   │       ├── __init__.py
+│   │       ├── auth.py                  # Login, registro, tokens
+│   │       ├── students.py              # CRUD estudiantes
+│   │       ├── attendance.py            # Asistencia y reconocimiento
+│   │       ├── grades.py                # Calificaciones
+│   │       ├── justifications.py        # Justificaciones de faltas
+│   │       ├── courses.py               # Cursos y materias
+│   │       └── predictions.py           # Predicciones ML
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── user.py                      # Modelo Usuario
+│   │   ├── student.py                   # Modelo Estudiante
+│   │   ├── course.py                    # Modelo Curso
+│   │   ├── subject.py                   # Modelo Materia
+│   │   ├── attendance.py                # Modelo Asistencia
+│   │   ├── grade.py                     # Modelo Calificación
+│   │   ├── justification.py             # Modelo Justificación
+│   │   ├── face_encoding.py             # Modelo Encoding Facial
+│   │   └── prediction.py                # Modelo Predicción
+│   │
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   ├── user_schema.py               # Pydantic schemas Usuario
+│   │   ├── student_schema.py            # Pydantic schemas Estudiante
+│   │   ├── attendance_schema.py         # Pydantic schemas Asistencia
+│   │   ├── grade_schema.py              # Pydantic schemas Calificación
+│   │   └── justification_schema.py      # Pydantic schemas Justificación
+│   │
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── auth_service.py              # Lógica autenticación
+│   │   ├── face_recognition_service.py  # Reconocimiento facial
+│   │   ├── ml_prediction_service.py     # Predicción ML
+│   │   ├── email_service.py             # Envío de emails
+│   │   ├── file_service.py              # Gestión archivos
+│   │   └── notification_service.py      # Notificaciones
+│   │
+│   ├── ml/
+│   │   ├── __init__.py
+│   │   ├── model_training.py            # Entrenamiento del modelo
+│   │   ├── predictor.py                 # Predicciones
+│   │   ├── feature_engineering.py       # Preparación features
+│   │   └── models/
+│   │       └── academic_model.pkl       # Modelo entrenado
+│   │
+│   └── utils/
+│       ├── __init__.py
+│       ├── security.py                  # Funciones seguridad
+│       ├── validators.py                # Validaciones
+│       ├── helpers.py                   # Funciones auxiliares
+│       └── constants.py                 # Constantes
+│
+├── migrations/                          # Migraciones Alembic
+│   └── versions/
+│
+├── tests/                               # Tests unitarios
+│   ├── test_auth.py
+│   ├── test_attendance.py
+│   └── test_predictions.py
+│
+├── uploads/                             # Archivos subidos
+│   ├── photos/
+│   ├── certificates/
+│   └── faces/
+│
+├── requirements.txt
+├── .env
+└── README.md
+```
+
+## Estructura de Carpetas del Frontend (React + Vite)
+
+```
+frontend/
+│
+├── public/
+│   └── vite.svg
+│
+├── src/
+│   ├── main.jsx                         # Punto de entrada
+│   ├── App.jsx                          # Componente principal
+│   ├── index.css                        # Estilos globales
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Header.jsx
+│   │   │   ├── Sidebar.jsx
+│   │   │   ├── Button.jsx
+│   │   │   ├── Modal.jsx
+│   │   │   ├── LoadingSpinner.jsx
+│   │   │   ├── ErrorBoundary.jsx
+│   │   │   └── ConfirmDialog.jsx
+│   │   │
+│   │   ├── attendance/
+│   │   │   ├── AttendanceUpload.jsx
+│   │   │   ├── AttendanceList.jsx
+│   │   │   ├── AttendanceCard.jsx
+│   │   │   ├── FaceRecognitionViewer.jsx
+│   │   │   └── ManualReviewModal.jsx
+│   │   │
+│   │   ├── grades/
+│   │   │   ├── GradesList.jsx
+│   │   │   ├── GradeCard.jsx
+│   │   │   ├── GradeForm.jsx
+│   │   │   └── ProgressChart.jsx
+│   │   │
+│   │   ├── predictions/
+│   │   │   ├── PredictionCard.jsx
+│   │   │   ├── RiskIndicator.jsx
+│   │   │   ├── FactorsChart.jsx
+│   │   │   └── RecommendationsList.jsx
+│   │   │
+│   │   ├── justifications/
+│   │   │   ├── JustificationForm.jsx
+│   │   │   ├── JustificationsList.jsx
+│   │   │   ├── JustificationCard.jsx
+│   │   │   └── ReviewModal.jsx
+│   │   │
+│   │   └── dashboard/
+│   │       ├── StatCard.jsx
+│   │       ├── AttendanceChart.jsx
+│   │       ├── GradesChart.jsx
+│   │       └── AlertsList.jsx
+│   │
+│   ├── pages/
+│   │   ├── Login.jsx
+│   │   ├── Dashboard.jsx
+│   │   ├── AttendancePage.jsx
+│   │   ├── GradesPage.jsx
+│   │   ├── PredictionsPage.jsx
+│   │   ├── JustificationsPage.jsx
+│   │   ├── StudentProfile.jsx
+│   │   ├── CoursesPage.jsx
+│   │   └── NotFound.jsx
+│   │
+│   ├── services/
+│   │   ├── api.js                       # Configuración Axios
+│   │   ├── authService.js               # Servicios autenticación
+│   │   ├── studentService.js            # Servicios estudiantes
+│   │   ├── attendanceService.js         # Servicios asistencia
+│   │   ├── gradeService.js              # Servicios calificaciones
+│   │   ├── predictionService.js         # Servicios predicciones
+│   │   └── justificationService.js      # Servicios justificaciones
+│   │
+│   ├── store/
+│   │   ├── authStore.js                 # Estado autenticación (Zustand)
+│   │   ├── studentStore.js              # Estado estudiantes
+│   │   ├── attendanceStore.js           # Estado asistencia
+│   │   └── notificationStore.js         # Estado notificaciones
+│   │
+│   ├── hooks/
+│   │   ├── useAuth.js                   # Hook autenticación
+│   │   ├── useAttendance.js             # Hook asistencia
+│   │   ├── usePrediction.js             # Hook predicciones
+│   │   └── useForm.js                   # Hook formularios
+│   │
+│   ├── utils/
+│   │   ├── constants.js                 # Constantes
+│   │   ├── validators.js                # Validaciones
+│   │   ├── formatters.js                # Formateadores
+│   │   └── helpers.js                   # Funciones auxiliares
+│   │
+│   ├── routes/
+│   │   ├── index.jsx                    # Configuración rutas
+│   │   ├── PrivateRoute.jsx             # Rutas protegidas
+│   │   └── PublicRoute.jsx              # Rutas públicas
+│   │
+│   └── assets/
+│       ├── images/
+│       └── styles/
+│           ├── variables.css
+│           └── components/
+│
+├── .env
+├── .env.example
+├── vite.config.js
+├── package.json
+├── tailwind.config.js                   # Si usas Tailwind
+└── README.md
+```
+
+## Script SQL - Creación de Base de Datos MySQL
+
+```sql
+-- ============================================
+-- BASE DE DATOS: SISTEMA DE ASISTENCIA Y RENDIMIENTO
+-- Instituto Liceo Cristiano
+-- ============================================
+
+-- Crear base de datos
+CREATE DATABASE IF NOT EXISTS liceo_cristiano 
+CHARACTER SET utf8mb4 
+COLLATE utf8mb4_unicode_ci;
+
+USE liceo_cristiano;
+
+-- ============================================
+-- TABLA: usuarios
+-- ============================================
+CREATE TABLE usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    rol ENUM('admin', 'profesor', 'coordinador', 'directivo') NOT NULL,
+    activo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_rol (rol)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: cursos
+-- ============================================
+CREATE TABLE cursos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    grado INT NOT NULL,
+    seccion VARCHAR(10) NOT NULL,
+    año_academico INT NOT NULL,
+    profesor_jefe_id INT,
+    activo BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (profesor_jefe_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+    INDEX idx_codigo (codigo),
+    INDEX idx_año_academico (año_academico)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: estudiantes
+-- ============================================
+CREATE TABLE estudiantes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    rut VARCHAR(20) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    email VARCHAR(100),
+    telefono VARCHAR(20),
+    direccion TEXT,
+    nombre_apoderado VARCHAR(200),
+    telefono_apoderado VARCHAR(20),
+    email_apoderado VARCHAR(100),
+    curso_id INT NOT NULL,
+    foto_perfil VARCHAR(255),
+    estado ENUM('activo', 'inactivo', 'retirado') DEFAULT 'activo',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE RESTRICT,
+    INDEX idx_rut (rut),
+    INDEX idx_curso (curso_id),
+    INDEX idx_estado (estado),
+    INDEX idx_nombre_apellido (nombre, apellido)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: rostros (encodings faciales)
+-- ============================================
+CREATE TABLE rostros (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT NOT NULL UNIQUE,
+    encoding_facial TEXT NOT NULL,
+    foto_original VARCHAR(255) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    INDEX idx_estudiante (estudiante_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: asistencias
+-- ============================================
+CREATE TABLE asistencias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT NOT NULL,
+    fecha DATE NOT NULL,
+    hora_entrada TIME,
+    estado ENUM('presente', 'ausente', 'justificado', 'tarde', 'revision_manual') NOT NULL,
+    foto_asistencia VARCHAR(255),
+    confianza_reconocimiento DECIMAL(5,2),
+    metodo_registro ENUM('reconocimiento_facial', 'manual') DEFAULT 'manual',
+    registrado_por INT,
+    observaciones TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    FOREIGN KEY (registrado_por) REFERENCES usuarios(id) ON DELETE SET NULL,
+    UNIQUE KEY unique_estudiante_fecha (estudiante_id, fecha),
+    INDEX idx_fecha (fecha),
+    INDEX idx_estudiante (estudiante_id),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: periodos_academicos
+-- ============================================
+CREATE TABLE periodos_academicos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    año INT NOT NULL,
+    estado ENUM('activo', 'cerrado', 'planificado') DEFAULT 'planificado',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_año (año),
+    INDEX idx_estado (estado)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: materias
+-- ============================================
+CREATE TABLE materias (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    codigo VARCHAR(20) NOT NULL UNIQUE,
+    curso_id INT NOT NULL,
+    profesor_id INT,
+    creditos INT DEFAULT 1,
+    descripcion TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (curso_id) REFERENCES cursos(id) ON DELETE CASCADE,
+    FOREIGN KEY (profesor_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+    INDEX idx_codigo (codigo),
+    INDEX idx_curso (curso_id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: calificaciones
+-- ============================================
+CREATE TABLE calificaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT NOT NULL,
+    materia_id INT NOT NULL,
+    periodo_academico_id INT NOT NULL,
+    nota DECIMAL(3,1) NOT NULL CHECK (nota >= 1.0 AND nota <= 7.0),
+    tipo_evaluacion ENUM('prueba', 'trabajo', 'examen', 'tarea', 'proyecto', 'otro') NOT NULL,
+    ponderacion DECIMAL(5,2) DEFAULT 1.00,
+    fecha_evaluacion DATE NOT NULL,
+    observaciones TEXT,
+    registrado_por INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    FOREIGN KEY (materia_id) REFERENCES materias(id) ON DELETE CASCADE,
+    FOREIGN KEY (periodo_academico_id) REFERENCES periodos_academicos(id) ON DELETE CASCADE,
+    FOREIGN KEY (registrado_por) REFERENCES usuarios(id) ON DELETE SET NULL,
+    INDEX idx_estudiante (estudiante_id),
+    INDEX idx_materia (materia_id),
+    INDEX idx_periodo (periodo_academico_id),
+    INDEX idx_fecha (fecha_evaluacion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: justificaciones
+-- ============================================
+CREATE TABLE justificaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_fin DATE NOT NULL,
+    motivo TEXT NOT NULL,
+    certificado_url VARCHAR(255),
+    estado ENUM('pendiente', 'aprobado', 'rechazado') DEFAULT 'pendiente',
+    tipo ENUM('medico', 'familiar', 'otro') DEFAULT 'otro',
+    revisado_por INT,
+    fecha_revision TIMESTAMP NULL,
+    comentario_revision TEXT,
+    token_revision VARCHAR(100) UNIQUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    FOREIGN KEY (revisado_por) REFERENCES usuarios(id) ON DELETE SET NULL,
+    INDEX idx_estudiante (estudiante_id),
+    INDEX idx_estado (estado),
+    INDEX idx_fecha (fecha_inicio, fecha_fin),
+    INDEX idx_token (token_revision)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: predicciones_academicas
+-- ============================================
+CREATE TABLE predicciones_academicas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    estudiante_id INT NOT NULL,
+    materia_id INT NOT NULL,
+    periodo_academico_id INT NOT NULL,
+    probabilidad_aprobacion DECIMAL(5,2) NOT NULL,
+    prediccion ENUM('bajo_riesgo', 'medio_riesgo', 'alto_riesgo') NOT NULL,
+    factores_riesgo JSON,
+    recomendaciones JSON,
+    fecha_prediccion DATE NOT NULL,
+    modelo_version VARCHAR(20),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id) ON DELETE CASCADE,
+    FOREIGN KEY (materia_id) REFERENCES materias(id) ON DELETE CASCADE,
+    FOREIGN KEY (periodo_academico_id) REFERENCES periodos_academicos(id) ON DELETE CASCADE,
+    INDEX idx_estudiante (estudiante_id),
+    INDEX idx_materia (materia_id),
+    INDEX idx_prediccion (prediccion),
+    INDEX idx_fecha (fecha_prediccion)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: notificaciones
+-- ============================================
+CREATE TABLE notificaciones (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT NOT NULL,
+    tipo ENUM('alerta_academica', 'justificacion', 'asistencia', 'general') NOT NULL,
+    titulo VARCHAR(200) NOT NULL,
+    mensaje TEXT NOT NULL,
+    leida BOOLEAN DEFAULT FALSE,
+    url_referencia VARCHAR(255),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE CASCADE,
+    INDEX idx_usuario (usuario_id),
+    INDEX idx_leida (leida),
+    INDEX idx_tipo (tipo)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- TABLA: logs_sistema
+-- ============================================
+CREATE TABLE logs_sistema (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario_id INT,
+    accion VARCHAR(100) NOT NULL,
+    tabla_afectada VARCHAR(50),
+    registro_id INT,
+    detalles JSON,
+    ip_address VARCHAR(45),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id) ON DELETE SET NULL,
+    INDEX idx_usuario (usuario_id),
+    INDEX idx_accion (accion),
+    INDEX idx_fecha (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- ============================================
+-- DATOS DE EJEMPLO (OPCIONAL)
+-- ============================================
+
+-- Insertar usuario administrador
+INSERT INTO usuarios (email, password_hash, nombre, apellido, rol) 
+VALUES ('admin@liceocristiano.cl', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewY5eYLN/0xRdXLO', 'Admin', 'Sistema', 'admin');
+
+-- Insertar periodo académico
+INSERT INTO periodos_academicos (nombre, fecha_inicio, fecha_fin, año, estado) 
+VALUES ('Primer Semestre', '2025-03-01', '2025-07-15', 2025, 'activo');
+
+-- Insertar curso de ejemplo
+INSERT INTO cursos (nombre, codigo, grado, seccion, año_academico, profesor_jefe_id) 
+VALUES ('Primero Medio A', '1MA', 1, 'A', 2025, 1);
+```
+
+## Queries SQL Útiles
+
+```sql
+-- ============================================
+-- QUERIES ÚTILES PARA EL SISTEMA
+-- ============================================
+
+-- 1. Ver asistencia de un estudiante en un rango de fechas
+SELECT 
+    e.nombre, 
+    e.apellido, 
+    a.fecha, 
+    a.estado, 
+    a.confianza_reconocimiento
+FROM asistencias a
+INNER JOIN estudiantes e ON a.estudiante_id = e.id
+WHERE e.id = ? 
+AND a.fecha BETWEEN ? AND ?
+ORDER BY a.fecha DESC;
+
+-- 2. Calcular porcentaje de asistencia por estudiante
+SELECT 
+    e.id,
+    e.nombre,
+    e.apellido,
+    COUNT(CASE WHEN a.estado IN ('presente', 'tarde') THEN 1 END) as dias_asistidos,
+    COUNT(*) as total_dias,
+    ROUND((COUNT(CASE WHEN a.estado IN ('presente', 'tarde') THEN 1 END) / COUNT(*)) * 100, 2) as porcentaje_asistencia
+FROM estudiantes e
+LEFT JOIN asistencias a ON e.id = a.estudiante_id
+WHERE a.fecha BETWEEN ? AND ?
+GROUP BY e.id, e.nombre, e.apellido;
+
+-- 3. Obtener promedio de notas por materia
+SELECT 
+    e.id,
+    e.nombre,
+    e.apellido,
+    m.nombre as materia,
+    ROUND(AVG(c.nota), 2) as promedio
+FROM calificaciones c
+INNER JOIN estudiantes e ON c.estudiante_id = e.id
+INNER JOIN materias m ON c.materia_id = m.id
+WHERE c.periodo_academico_id = ?
+GROUP BY e.id, e.nombre, e.apellido, m.id, m.nombre;
+
+-- 4. Estudiantes con riesgo académico (promedio < 4.0)
+SELECT 
+    e.id,
+    e.nombre,
+    e.apellido,
+    m.nombre as materia,
+    ROUND(AVG(c.nota), 2) as promedio,
+    pa.probabilidad_aprobacion,
+    pa.prediccion
+FROM estudiantes e
+INNER JOIN calificaciones c ON e.id = c.estudiante_id
+INNER JOIN materias m ON c.materia_id = m.id
+LEFT JOIN predicciones_academicas pa ON e.id = pa.estudiante_id AND m.id = pa.materia_id
+WHERE c.periodo_academico_id = ?
+GROUP BY e.id, e.nombre, e.apellido, m.id, m.nombre, pa.probabilidad_aprobacion, pa.prediccion
+HAVING promedio < 4.0;
+
+-- 5. Justificaciones pendientes de revisión
+SELECT 
+    j.id,
+    e.nombre,
+    e.apellido,
+    j.fecha_inicio,
+    j.fecha_fin,
+    j.motivo,
+    j.certificado_url,
+    j.created_at
+FROM justificaciones j
+INNER JOIN estudiantes e ON j.estudiante_id = e.id
+WHERE j.estado = 'pendiente'
+ORDER BY j.created_at ASC;
+
+-- 6. Actualizar faltas a justificadas cuando se aprueba una justificación
+UPDATE asistencias 
+SET estado = 'justificado'
+WHERE estudiante_id = ? 
+AND fecha BETWEEN ? AND ?
+AND estado = 'ausente';
+
+-- 7. Dashboard: Estadísticas generales del curso
+SELECT 
+    c.nombre as curso,
+    COUNT(DISTINCT e.id) as total_estudiantes,
+    ROUND(AVG(
+        (SELECT COUNT(*) FROM asistencias a2 
+         WHERE a2.estudiante_id = e.id 
+         AND a2.estado IN ('presente', 'tarde')
+         AND a2.fecha >= CURDATE() - INTERVAL 30 DAY
+        ) / 30.0 * 100
+    ), 2) as promedio_asistencia_30dias,
+    COUNT(CASE WHEN pa.prediccion = 'alto_riesgo' THEN 1 END) as estudiantes_alto_riesgo
+FROM cursos c
+INNER JOIN estudiantes e ON c.id = e.curso_id
+LEFT JOIN predicciones_academicas pa ON e.id = pa.estudiante_id
+WHERE c.id = ?
+GROUP BY c.id, c.nombre;
+
+-- 8. Features para Machine Learning (predicción)
+SELECT 
+    e.id as estudiante_id,
+    -- Promedio histórico
+    ROUND(AVG(c.nota), 2) as promedio_historico,
+    -- Promedio del período actual
+    ROUND(AVG(CASE WHEN c.periodo_academico_id = ? THEN c.nota END), 2) as promedio_actual,
+    -- Asistencia porcentual
+    ROUND((COUNT(CASE WHEN a.estado IN ('presente', 'tarde') THEN 1 END) / COUNT(DISTINCT a.fecha)) * 100, 2) as porcentaje_asistencia,
+    -- Número de ausencias
+    COUNT(CASE WHEN a.estado = 'ausente' THEN 1 END) as total_ausencias,
+    -- Tendencia (últimas 3 vs primeras 3 notas)
+    (
+        SELECT AVG(nota) FROM (
+            SELECT nota FROM calificaciones 
+            WHERE estudiante_id = e.id AND materia_id = ?
+            ORDER BY fecha_evaluacion DESC LIMIT 3
+        ) sub1
+    ) - (
+        SELECT AVG(nota) FROM (
+            SELECT nota FROM calificaciones 
+            WHERE estudiante_id = e.id AND materia_id = ?
+            ORDER BY fecha_evaluacion ASC LIMIT 3
+        ) sub2
+    ) as tendencia_notas
+FROM estudiantes e
+LEFT JOIN calificaciones c ON e.id = c.estudiante_id AND c.materia_id = ?
+LEFT JOIN asistencias a ON e.id = a.estudiante_id
+WHERE e.curso_id = ?
+GROUP BY e.id;
+```
